@@ -5,4 +5,5 @@ using UnityEngine;
 public class GameReferences : MonoBehaviour {
 
 	public StartScreenReferences startScreenRef;
+	public ShutterBoxGameReferences shutterBoxGameRef;
 }

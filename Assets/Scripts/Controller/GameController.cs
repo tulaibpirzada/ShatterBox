@@ -25,5 +25,6 @@ public class GameController : Singleton<GameController> {
 	public void OpenShutterBoxScreen ()
 	{
 		StartScreenController.Instance.HideStartScreen ();
+		ShutterBoxGameController.Instance.ShowShutterBoxGameScreen (gameRef.shutterBoxGameRef);
 	}
 }
