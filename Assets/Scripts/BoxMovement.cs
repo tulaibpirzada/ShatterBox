@@ -21,8 +21,9 @@ public class BoxMovement : MonoBehaviour {
 				rb.bodyType = RigidbodyType2D.Dynamic;
 				//				rb.isKinematic = false;
 				rb.velocity = Vector2.zero;
-				rb.AddForce(transform.up * 400.0f);
+				rb.AddForce(transform.up * 700.0f);
 				Debug.Log ("Force Added");
+				ShutterBoxGameController.Instance.ShouldAllowBoxMovement = false;
 			}
 		}
 	}
