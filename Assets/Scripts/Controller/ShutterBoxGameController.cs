@@ -10,6 +10,10 @@ public class ShutterBoxGameController : Singleton<ShutterBoxGameController> {
 		get;
 		set;
 	}
+	public bool IsBoxTouched {
+		get;
+		set;
+	}
 	Coroutine lastRoutine=null;
 
 	//Shows first game start screen
@@ -18,6 +22,7 @@ public class ShutterBoxGameController : Singleton<ShutterBoxGameController> {
 		shutterBoxGameRef = shutterBoxGameReferences;
 		shutterBoxGameRef.gameObject.SetActive (true);
 		ShouldAllowBoxMovement = true;
+		IsBoxTouched = false;
 		lastRoutine=StartCoroutine(SpawnBoxes());
 	}
 	//Hide first game start screen
