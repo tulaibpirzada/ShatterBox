@@ -28,10 +28,9 @@ public class BoxMovement : MonoBehaviour {
 			Debug.Log ("Force Added");
 			isForceApplied = true;
 		}
-			if (isForceApplied) {
 
 				//When Touch is started
-				if(!ShutterBoxGameController.Instance.IsBoxTouched && ((Input.touchCount > 0 && Input.GetTouch (0).phase == TouchPhase.Began) || (Input.GetMouseButtonDown (0)))){
+		if((Input.touchCount > 0 && Input.GetTouch (0).phase == TouchPhase.Began) || (Input.GetMouseButtonDown (0))){
 
 				Debug.Log ("in touch");
 					Vector3 worldPoint = Vector3.zero;
@@ -41,9 +40,12 @@ public class BoxMovement : MonoBehaviour {
 					#elif (UNITY_ANDROID || UNITY_IPHONE || UNITY_WP8)
 					worldPoint = Camera.main.ScreenToWorldPoint(Input.GetTouch(0).position);
 					#endif
+			Debug.Log ("World Point: " + worldPoint);
 					if(gameObject.GetComponent<Collider2D>().OverlapPoint(worldPoint)){
-						ShutterBoxGameController.Instance.IsBoxTouched = true;
+//						ShutterBoxGameController.Instance.IsBoxTouched = true;
 						Debug.Log ("Box Touched");
+				        Destroy (gameObject);
+				        Debug.Log ("Destroyed");
 					}
 //					if (ShutterBoxGameController.Instance.IsBoxTouched) {
 //						Destroy (gameObject.GetComponent<Collider2D>());
@@ -54,5 +56,4 @@ public class BoxMovement : MonoBehaviour {
 			//}
 		}
 	}
-}
 }
