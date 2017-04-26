@@ -44,6 +44,8 @@ public class BoxMovement : MonoBehaviour {
 					if(gameObject.GetComponent<Collider2D>().OverlapPoint(worldPoint)){
 //						ShutterBoxGameController.Instance.IsBoxTouched = true;
 						Debug.Log ("Box Touched");
+				GameModel.Instance.Score++;
+				ShutterBoxGameController.Instance.UpdateScore ();
 				        Destroy (gameObject);
 				        Debug.Log ("Destroyed");
 					}

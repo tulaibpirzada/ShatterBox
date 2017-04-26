@@ -22,9 +22,16 @@ public class GameController : Singleton<GameController> {
 		gameRef = gameContextObject.GetComponent<GameReferences> ();
 		StartScreenController.Instance.ShowStartScreen (gameRef.startScreenRef);
 	}
+
 	public void OpenShutterBoxScreen ()
 	{
 		StartScreenController.Instance.HideStartScreen ();
 		ShutterBoxGameController.Instance.ShowShutterBoxGameScreen (gameRef.shutterBoxGameRef);
+	}
+
+	public void OpenGameOverScreen ()
+	{
+		ShutterBoxGameController.Instance.HideShutterBoxScreen ();
+		GameOverScreenController.Instance.ShowGameOverScreen (gameRef.gameOverScreenRef);
 	}
 }

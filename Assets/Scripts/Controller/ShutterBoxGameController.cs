@@ -21,6 +21,9 @@ public class ShutterBoxGameController : Singleton<ShutterBoxGameController> {
 	{
 		shutterBoxGameRef = shutterBoxGameReferences;
 		shutterBoxGameRef.gameObject.SetActive (true);
+		shutterBoxGameRef.playerScoreLabel.gameObject.SetActive (true);
+		GameModel.Instance.SetUpGameVariables ();
+		UpdateScore ();
 		ShouldAllowBoxMovement = true;
 		IsBoxTouched = false;
 		lastRoutine=StartCoroutine(SpawnBoxes());
@@ -29,6 +32,8 @@ public class ShutterBoxGameController : Singleton<ShutterBoxGameController> {
 	public void HideShutterBoxScreen()
 	{
 		shutterBoxGameRef.gameObject.SetActive (false);
+		if(lastRoutine != null)
+			StopCoroutine (lastRoutine);
 	}
 	IEnumerator SpawnBoxes()
 	{
@@ -47,4 +52,8 @@ public class ShutterBoxGameController : Singleton<ShutterBoxGameController> {
 			yield return new WaitForSeconds(Random.Range(4.0f, 5.0f));
 		}
 	} 
+	public void UpdateScore ()
+	{
+		shutterBoxGameRef.playerScoreLabel.text = "Score: " + GameModel.Instance.Score.ToString();
+	}
 }

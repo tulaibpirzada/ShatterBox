@@ -9,6 +9,7 @@ public class BoxDestroyer : MonoBehaviour {
 		if (collider.gameObject.tag == "Box") 
 		{
 			Destroy (collider.gameObject);
+			GameController.Instance.OpenGameOverScreen ();
 		}
 	}
 }
