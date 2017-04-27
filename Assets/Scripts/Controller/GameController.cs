@@ -34,4 +34,10 @@ public class GameController : Singleton<GameController> {
 		ShutterBoxGameController.Instance.HideShutterBoxScreen ();
 		GameOverScreenController.Instance.ShowGameOverScreen (gameRef.gameOverScreenRef);
 	}
+
+	public void ReloadShutterBoxGameScreen ()
+	{
+		GameOverScreenController.Instance.HideGameOverScreen ();
+		ShutterBoxGameController.Instance.ShowShutterBoxGameScreen (gameRef.shutterBoxGameRef);
+	}
 }
