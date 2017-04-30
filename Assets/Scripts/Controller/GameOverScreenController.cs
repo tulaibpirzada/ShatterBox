@@ -10,11 +10,17 @@ public class GameOverScreenController : Singleton<GameOverScreenController> {
 	{
 		gameOverScreenRef = gameOverScreenReference;
 		gameOverScreenRef.gameObject.SetActive (true);
+		UpdateBestScore ();
 	}
 
 	public void HideGameOverScreen()
 	{
 		gameOverScreenRef.gameObject.SetActive (false);
+	}
+
+	public void UpdateBestScore()
+	{
+		gameOverScreenRef.bestScore.text = "BEST: " + GameModel.Instance.BestScore.ToString (); 
 	}
 
 }

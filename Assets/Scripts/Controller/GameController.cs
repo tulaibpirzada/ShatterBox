@@ -31,6 +31,10 @@ public class GameController : Singleton<GameController> {
 
 	public void OpenGameOverScreen ()
 	{
+		if (GameModel.Instance.Score > GameModel.Instance.BestScore) {
+			GameModel.Instance.BestScore = GameModel.Instance.Score;
+			PlayerPrefs.SetInt ("BestScore", GameModel.Instance.BestScore);
+		}
 		ShutterBoxGameController.Instance.HideShutterBoxScreen ();
 		GameOverScreenController.Instance.ShowGameOverScreen (gameRef.gameOverScreenRef);
 	}
