@@ -4,13 +4,8 @@ using UnityEngine;
 
 public class ShutterBoxGameEvents : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
+	public void PauseButtonPressed()
+	{
+		ShutterBoxGameController.Instance.GamePause ();
 	}
 }

@@ -17,7 +17,7 @@ public class BoxMovement : MonoBehaviour {
 	// Update is called once per frame
 	void FixedUpdate () {
 
-		if (ShutterBoxGameController.Instance.ShouldAllowBoxMovement && !isForceApplied) {
+		if (ShutterBoxGameController.Instance.ShouldAllowBoxMovement && !isForceApplied && ShutterBoxGameController.Instance.ResumeGame) {
 //
 //			if((Input.touchCount > 0 && Input.GetTouch (0).phase == TouchPhase.Began) || (Input.GetMouseButtonDown (0))){
 //		if(!isForceApplied){
@@ -57,5 +57,23 @@ public class BoxMovement : MonoBehaviour {
 //				}
 			//}
 		}
+
+		if (ShutterBoxGameController.Instance.IsGamePaused) {
+
+			Rigidbody2D rb = gameObject.GetComponent < Rigidbody2D> ();
+			rb.bodyType = RigidbodyType2D.Dynamic;								
+			rb.velocity = Vector2.zero;
+			rb.isKinematic = false;
+			Physics2D.gravity = new Vector3 (0.0f, -1.0f, 0.0f);
+		} 
+//		if (ShutterBoxGameController.Instance.ResumeGame) {
+//
+//			Rigidbody2D rb = gameObject.GetComponent < Rigidbody2D> ();
+//			rb.bodyType = RigidbodyType2D.Dynamic;								
+//			rb.velocity = Vector2.zero;
+//			rb.isKinematic = true;
+//			Physics2D.gravity = new Vector3 (0.0f, 1.0f, 0.0f);
+//			Debug.Log ("Resume Movement");
+//		}
 	}
 }

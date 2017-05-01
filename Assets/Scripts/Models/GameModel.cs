@@ -17,6 +17,11 @@ public class GameModel: Singleton <GameModel>
 		set{bestScore = value;}
 	}
 
+	public int PauseButtonCounter {
+		get;
+		set;
+	}
+
 	public void SetUpGameVariables()
 	{
 		this.Score = 0;
@@ -25,5 +30,6 @@ public class GameModel: Singleton <GameModel>
 		}  else {
 			bestScore = 0;
 		}
+		this.PauseButtonCounter = 0;
 	}
 }

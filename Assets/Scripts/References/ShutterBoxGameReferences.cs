@@ -7,4 +7,5 @@ public class ShutterBoxGameReferences : MonoBehaviour {
 
 	public GameObject box;
 	public Text playerScoreLabel;
+	public Button pauseButton;
 }
