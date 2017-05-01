@@ -36,7 +36,7 @@ public class ShutterBoxGameController : Singleton<ShutterBoxGameController> {
 	//Shows first game start screen
 	public void ShowShutterBoxGameScreen(ShutterBoxGameReferences shutterBoxGameReferences)
 	{
-		ResumeGame = true;
+//		ResumeGame = true;
 		shutterBoxGameRef = shutterBoxGameReferences;
 		shutterBoxGameRef.gameObject.SetActive (true);
 		shutterBoxGameRef.playerScoreLabel.gameObject.SetActive (true);
