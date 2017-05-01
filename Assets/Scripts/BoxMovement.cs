@@ -11,7 +11,6 @@ public class BoxMovement : MonoBehaviour {
 
 		isForceApplied = false;
 		shouldAllowBoxDestruction = true;
-
 	}
 	
 	// Update is called once per frame
@@ -69,6 +68,7 @@ public class BoxMovement : MonoBehaviour {
 //			rb.isKinematic = false;
 //			Physics2D.gravity = new Vector3 (0.0f, 0.0f, 0.0f);
 		} 
+
 		if (ShutterBoxGameController.Instance.ResumeGame) {
 
 			Rigidbody2D rb = gameObject.GetComponent < Rigidbody2D> ();
@@ -78,6 +78,10 @@ public class BoxMovement : MonoBehaviour {
 			print ("Gravity" + Physics2D.gravity);
 			ShutterBoxGameController.Instance.ResumeGame = false;
 			Debug.Log ("Resume Movement");
+		}
+
+		if(ShutterBoxGameController.Instance.IsGameOver) {
+			Destroy(gameObject);
 		}
 	}
 }

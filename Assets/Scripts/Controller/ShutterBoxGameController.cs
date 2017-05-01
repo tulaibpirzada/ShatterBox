@@ -31,6 +31,11 @@ public class ShutterBoxGameController : Singleton<ShutterBoxGameController> {
 		set;
 	}
 
+	public bool IsGameOver {
+		get;
+		set;
+	}
+
 	Coroutine lastRoutine=null;
 
 	//Shows first game start screen
@@ -43,6 +48,7 @@ public class ShutterBoxGameController : Singleton<ShutterBoxGameController> {
 		shutterBoxGameRef.pauseButton.gameObject.SetActive (true);
 		GameModel.Instance.SetUpGameVariables ();
 		UpdateScore ();
+		IsGameOver = false;
 		ShouldAllowBoxMovement = true;
 		IsBoxTouched = false;
 		lastRoutine=StartCoroutine(SpawnBoxes());
@@ -51,6 +57,7 @@ public class ShutterBoxGameController : Singleton<ShutterBoxGameController> {
 	//Hide first game start screen
 	public void HideShutterBoxScreen()
 	{
+		IsGameOver = true;
 		shutterBoxGameRef.gameObject.SetActive (false);
 		shutterBoxGameRef.pauseButton.gameObject.SetActive (false);
 		if(lastRoutine != null)
@@ -60,7 +67,7 @@ public class ShutterBoxGameController : Singleton<ShutterBoxGameController> {
 	IEnumerator SpawnBoxes()
 	{
 		yield return new WaitForSeconds(1.0f);
-		while (true) {
+		while (!IsGameOver) {
 			GameObject box = shutterBoxGameRef.box;
 			float []x_values = { -2.3f,-2.0f,-1.5f,-1.0f,-0.5f,0.0f,0.5f,1.0f,1.5f,2.0f, 2.3f };
 			float x_value = x_values [Random.Range(0, x_values.Length)];
