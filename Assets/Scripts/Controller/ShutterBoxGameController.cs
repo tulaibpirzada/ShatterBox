@@ -36,6 +36,21 @@ public class ShutterBoxGameController : Singleton<ShutterBoxGameController> {
 		set;
 	}
 
+	public int BoxCount {
+		get;
+		set;
+	}
+
+	public bool IsBombDestroyed {
+		get;
+		set;
+	}
+
+	public bool ShouldAllowBoxDestruction {
+		get;
+		set;
+	}
+
 	Coroutine lastRoutine=null;
 
 	//Shows first game start screen
@@ -48,8 +63,10 @@ public class ShutterBoxGameController : Singleton<ShutterBoxGameController> {
 		shutterBoxGameRef.pauseButton.gameObject.SetActive (true);
 		GameModel.Instance.SetUpGameVariables ();
 		UpdateScore ();
+		BoxCount = 0;
 		IsGameOver = false;
 		ShouldAllowBoxMovement = true;
+		ShouldAllowBoxDestruction = false;
 		IsBoxTouched = false;
 		lastRoutine=StartCoroutine(SpawnBoxes());
 	}
@@ -78,7 +95,7 @@ public class ShutterBoxGameController : Singleton<ShutterBoxGameController> {
 			);
 			Quaternion spawnRotation = Quaternion.identity;
 			Instantiate(box, spawnPosition, spawnRotation);
-			yield return new WaitForSeconds(Random.Range(4.0f, 5.0f));
+			yield return new WaitForSeconds(Random.Range(1.0f, 1.5f));
 		}
 	} 
 
