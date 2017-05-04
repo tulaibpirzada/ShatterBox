@@ -9,6 +9,7 @@ public class BoxMovement : MonoBehaviour {
 	private bool shouldAllowBoxDestruction;
 	private bool checkDestroy;
 	Coroutine lastRoutine;
+	Coroutine boxResumeRoutine;
 	private enum BoxTypes {
 		Simple = 0,
 		Bomb = 1, 
@@ -20,6 +21,7 @@ public class BoxMovement : MonoBehaviour {
 	void Start () {
 
 		lastRoutine = null;
+		boxResumeRoutine = null;
 		ShutterBoxGameController.Instance.BoxCount++;
 		isForceApplied = false;
 //		shouldAllowBoxDestruction = true;
@@ -106,7 +108,7 @@ public class BoxMovement : MonoBehaviour {
 			rb.velocity = Vector2.zero;
 			rb.gravityScale = 1;
 			print ("Gravity" + Physics2D.gravity);
-			ShutterBoxGameController.Instance.ResumeGame = false;
+			lastRoutine = StartCoroutine (BoxResume());
 			Debug.Log ("Resume Movement");
 		}
 
@@ -125,6 +127,7 @@ public class BoxMovement : MonoBehaviour {
 
 		}
 	}
+
 	IEnumerator StopBoxDestruction(GameObject gameObject)
 	{
 		yield return new WaitForSeconds (0.5f);
@@ -132,4 +135,11 @@ public class BoxMovement : MonoBehaviour {
 		ShutterBoxGameController.Instance.IsBombDestroyed = false;
 		Debug.Log ("Within bomb box destruction");
 	}
+
+	IEnumerator BoxResume()
+	{
+		yield return new WaitForSeconds (0.15f);
+		ShutterBoxGameController.Instance.ResumeGame = false;
+	}
+
 }
