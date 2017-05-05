@@ -51,6 +51,16 @@ public class ShutterBoxGameController : Singleton<ShutterBoxGameController> {
 		set;
 	}
 
+	public bool IsFreezePressed {
+		get;
+		set;
+	}
+
+	public bool IsSlowPressed {
+		get;
+		set;
+	}
+
 	Coroutine lastRoutine=null;
 
 	//Shows first game start screen
@@ -124,5 +134,20 @@ public class ShutterBoxGameController : Singleton<ShutterBoxGameController> {
 			Debug.Log ("Resume Game");
 		}
 
+	}
+
+	public void StopBoxSpawningWhileFreeze ()
+	{
+		Debug.Log ("While Freeze");
+		if (lastRoutine != null) {
+			StopCoroutine (lastRoutine);
+			lastRoutine = null;
+		}
+	}
+
+	public void ResumeBoxSpawning ()
+	{
+		Debug.Log ("Again Spawning");
+		lastRoutine=StartCoroutine(SpawnBoxes());
 	}
 }

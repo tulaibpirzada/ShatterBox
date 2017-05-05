@@ -8,8 +8,11 @@ public class BoxMovement : MonoBehaviour {
 	private bool isForceApplied;
 	private bool shouldAllowBoxDestruction;
 	private bool checkDestroy;
+	private bool isFreeze;
 	Coroutine lastRoutine;
 	Coroutine boxResumeRoutine;
+	Coroutine freezeRoutine;
+	Coroutine slowRoutine;
 	private enum BoxTypes {
 		Simple = 0,
 		Bomb = 1, 
@@ -22,13 +25,26 @@ public class BoxMovement : MonoBehaviour {
 
 		lastRoutine = null;
 		boxResumeRoutine = null;
+		freezeRoutine = null;
+		slowRoutine = null;
 		ShutterBoxGameController.Instance.BoxCount++;
 		isForceApplied = false;
+		if (ShutterBoxGameController.Instance.BoxCount % 5 == 0) {
+			boxType = BoxTypes.TimeFreeze;
+			boxImage.sprite = Resources.Load ("freeze", typeof(Sprite)) as Sprite;
+		}
 //		shouldAllowBoxDestruction = true;
-		if (ShutterBoxGameController.Instance.BoxCount % 10 == 0) {
-			boxType = BoxTypes.Bomb;
-			boxImage.sprite = Resources.Load ("bomb", typeof(Sprite)) as Sprite;
-		} else {
+//		if (ShutterBoxGameController.Instance.BoxCount % 10 == 0) {
+//			boxType = BoxTypes.Bomb;
+//			boxImage.sprite = Resources.Load ("bomb", typeof(Sprite)) as Sprite;
+//		} else if (ShutterBoxGameController.Instance.BoxCount % 5 == 0) {
+//			boxType = BoxTypes.TimeFreeze;
+//			boxImage.sprite = Resources.Load ("freeze", typeof(Sprite)) as Sprite;
+//		} else if (ShutterBoxGameController.Instance.BoxCount % 8 == 0) {
+//			boxType = BoxTypes.TimeSlow;
+//			boxImage.sprite = Resources.Load ("slow", typeof(Sprite)) as Sprite;
+//		}
+		else {
 			boxType = BoxTypes.Simple;
 			boxImage.sprite = Resources.Load ("box", typeof(Sprite)) as Sprite;
 		}
@@ -79,6 +95,15 @@ public class BoxMovement : MonoBehaviour {
 					Destroy (gameObject);
 					
 				}
+				if (boxType == BoxTypes.TimeFreeze){
+					ShutterBoxGameController.Instance.IsFreezePressed = true;
+					isFreeze = false;
+					Destroy (gameObject);
+				}
+				if (boxType == BoxTypes.TimeSlow){
+					ShutterBoxGameController.Instance.IsSlowPressed = true;
+					Destroy (gameObject);
+				}
 					}
 //					if (ShutterBoxGameController.Instance.IsBoxTouched) {
 //						Destroy (gameObject.GetComponent<Collider2D>());
@@ -120,11 +145,30 @@ public class BoxMovement : MonoBehaviour {
 			GameModel.Instance.Score++;
 			ShutterBoxGameController.Instance.UpdateScore ();
 //			Destroy(gameObject);
-			lastRoutine=StartCoroutine(StopBoxDestruction(gameObject));
+			lastRoutine = StartCoroutine(StopBoxDestruction(gameObject));
 //			if (lastRoutine != null) {
 //				StopCoroutine (StopBoxDestruction ());
 //			}
 
+		}
+		if(ShutterBoxGameController.Instance.IsFreezePressed && !isFreeze){
+			Rigidbody2D rb = gameObject.GetComponent <Rigidbody2D> ();
+			rb.bodyType = RigidbodyType2D.Dynamic;								
+			rb.velocity = Vector2.zero;
+			rb.gravityScale = 0;
+			isFreeze = true;
+			ShutterBoxGameController.Instance.StopBoxSpawningWhileFreeze ();
+			freezeRoutine = StartCoroutine (StopBoxFreeze());
+		}
+		if(ShutterBoxGameController.Instance.IsSlowPressed){
+			Rigidbody2D rb = gameObject.GetComponent < Rigidbody2D> ();
+			Debug.Log ("Velocity = " + rb.velocity);
+			if (rb.velocity.y < 0) {
+				rb.gravityScale = 0.2f;
+				slowRoutine = StartCoroutine (StopSlowBoxMovement ());
+			} else {
+				
+			}
 		}
 	}
 
@@ -140,6 +184,21 @@ public class BoxMovement : MonoBehaviour {
 	{
 		yield return new WaitForSeconds (0.15f);
 		ShutterBoxGameController.Instance.ResumeGame = false;
+	}
+
+	IEnumerator StopBoxFreeze()
+	{
+		yield return new WaitForSeconds (0.25f);
+		ShutterBoxGameController.Instance.IsFreezePressed = false;
+		ShutterBoxGameController.Instance.ResumeBoxSpawning ();
+		Debug.Log ("Within Box freeze coroutine");
+	}
+
+	IEnumerator StopSlowBoxMovement ()
+	{
+		yield return new WaitForSeconds (3.0f);
+		ShutterBoxGameController.Instance.IsSlowPressed = false;
+		Debug.Log ("Within Box Slow coroutine");
 	}
 
 }
