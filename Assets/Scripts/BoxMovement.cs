@@ -29,21 +29,21 @@ public class BoxMovement : MonoBehaviour {
 		slowRoutine = null;
 		ShutterBoxGameController.Instance.BoxCount++;
 		isForceApplied = false;
-		if (ShutterBoxGameController.Instance.BoxCount % 5 == 0) {
-			boxType = BoxTypes.TimeFreeze;
-			boxImage.sprite = Resources.Load ("freeze", typeof(Sprite)) as Sprite;
-		}
-//		shouldAllowBoxDestruction = true;
-//		if (ShutterBoxGameController.Instance.BoxCount % 10 == 0) {
-//			boxType = BoxTypes.Bomb;
-//			boxImage.sprite = Resources.Load ("bomb", typeof(Sprite)) as Sprite;
-//		} else if (ShutterBoxGameController.Instance.BoxCount % 5 == 0) {
+//		if (ShutterBoxGameController.Instance.BoxCount % 5 == 0) {
 //			boxType = BoxTypes.TimeFreeze;
 //			boxImage.sprite = Resources.Load ("freeze", typeof(Sprite)) as Sprite;
-//		} else if (ShutterBoxGameController.Instance.BoxCount % 8 == 0) {
-//			boxType = BoxTypes.TimeSlow;
-//			boxImage.sprite = Resources.Load ("slow", typeof(Sprite)) as Sprite;
 //		}
+//		shouldAllowBoxDestruction = true;
+		if (ShutterBoxGameController.Instance.BoxCount % 10 == 0) {
+			boxType = BoxTypes.Bomb;
+			boxImage.sprite = Resources.Load ("bomb", typeof(Sprite)) as Sprite;
+		} else if (ShutterBoxGameController.Instance.BoxCount % 5 == 0) {
+			boxType = BoxTypes.TimeFreeze;
+			boxImage.sprite = Resources.Load ("freeze", typeof(Sprite)) as Sprite;
+		} else if (ShutterBoxGameController.Instance.BoxCount % 8 == 0) {
+			boxType = BoxTypes.TimeSlow;
+			boxImage.sprite = Resources.Load ("slow", typeof(Sprite)) as Sprite;
+		}
 		else {
 			boxType = BoxTypes.Simple;
 			boxImage.sprite = Resources.Load ("box", typeof(Sprite)) as Sprite;
@@ -91,16 +91,22 @@ public class BoxMovement : MonoBehaviour {
 					Debug.Log ("Destroyed");
 				}
 				if (boxType == BoxTypes.Bomb) {
+					GameModel.Instance.Score++;
+					ShutterBoxGameController.Instance.UpdateScore ();
 					ShutterBoxGameController.Instance.IsBombDestroyed = true;
 					Destroy (gameObject);
 					
 				}
 				if (boxType == BoxTypes.TimeFreeze){
+					GameModel.Instance.Score++;
+					ShutterBoxGameController.Instance.UpdateScore ();
 					ShutterBoxGameController.Instance.IsFreezePressed = true;
 					isFreeze = false;
 					Destroy (gameObject);
 				}
 				if (boxType == BoxTypes.TimeSlow){
+					GameModel.Instance.Score++;
+					ShutterBoxGameController.Instance.UpdateScore ();
 					ShutterBoxGameController.Instance.IsSlowPressed = true;
 					Destroy (gameObject);
 				}
@@ -142,8 +148,8 @@ public class BoxMovement : MonoBehaviour {
 		}
 
 		if(ShutterBoxGameController.Instance.IsBombDestroyed) {
-			GameModel.Instance.Score++;
-			ShutterBoxGameController.Instance.UpdateScore ();
+//			GameModel.Instance.Score++;
+//			ShutterBoxGameController.Instance.UpdateScore ();
 //			Destroy(gameObject);
 			lastRoutine = StartCoroutine(StopBoxDestruction(gameObject));
 //			if (lastRoutine != null) {
@@ -157,12 +163,16 @@ public class BoxMovement : MonoBehaviour {
 			rb.velocity = Vector2.zero;
 			rb.gravityScale = 0;
 			isFreeze = true;
+//			GameModel.Instance.Score++;
+//			ShutterBoxGameController.Instance.UpdateScore ();
 			ShutterBoxGameController.Instance.StopBoxSpawningWhileFreeze ();
 			freezeRoutine = StartCoroutine (StopBoxFreeze());
 		}
 		if(ShutterBoxGameController.Instance.IsSlowPressed){
 			Rigidbody2D rb = gameObject.GetComponent < Rigidbody2D> ();
 			Debug.Log ("Velocity = " + rb.velocity);
+//			GameModel.Instance.Score++;
+//			ShutterBoxGameController.Instance.UpdateScore ();
 			if (rb.velocity.y < 0) {
 				rb.gravityScale = 0.2f;
 				slowRoutine = StartCoroutine (StopSlowBoxMovement ());
