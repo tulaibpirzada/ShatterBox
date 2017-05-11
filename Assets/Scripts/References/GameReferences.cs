@@ -8,4 +8,5 @@ public class GameReferences : MonoBehaviour {
 	public ShutterBoxGameReferences shutterBoxGameRef;
 	public GameOverScreenReferences gameOverScreenRef;
 	public ThemeSelectionScreenReferences themeSelectionScreenRef;
+	public OptionsScreenReferences optionsScreenRef;
 }

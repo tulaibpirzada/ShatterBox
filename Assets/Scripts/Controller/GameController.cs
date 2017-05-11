@@ -72,4 +72,10 @@ public class GameController : Singleton<GameController> {
 		ThemeSelectionScreenController.Instance.HideThemeSelectionScreen ();
 		StartScreenController.Instance.ShowStartScreen (gameRef.startScreenRef);
 	}
+
+	public void OpenOptionsScreen ()
+	{
+		StartScreenController.Instance.HideStartScreen ();
+		OptionsScreenController.Instance.ShowOptionScreen (gameRef.optionsScreenRef);
+	}
 }
