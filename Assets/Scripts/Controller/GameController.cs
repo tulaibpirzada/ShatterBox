@@ -14,6 +14,11 @@ public class GameController : Singleton<GameController> {
 		get;
 		set;
 	}
+
+	public bool IsThemeChanged {
+		get;
+		set;
+	}
 	//Loads the game
 	public void LoadGame(GameObject gameObject)
 	{
@@ -43,5 +48,28 @@ public class GameController : Singleton<GameController> {
 	{
 		GameOverScreenController.Instance.HideGameOverScreen ();
 		ShutterBoxGameController.Instance.ShowShutterBoxGameScreen (gameRef.shutterBoxGameRef);
+	}
+
+	public void OpenThemeSelectionScreen ()
+	{
+		StartScreenController.Instance.HideStartScreen ();
+		ThemeSelectionScreenController.Instance.ShowThemeSelectionScreen (gameRef.themeSelectionScreenRef);
+	}
+
+	public void SetTheme(int buttonIndex)
+	{
+		IsThemeChanged = true;
+		GameModel.Instance.SelectedThemeChoice = ShutterGameConstants.THEMES[buttonIndex];
+		PlayerPrefs.SetString ("ThemeChoice", GameModel.Instance.SelectedThemeChoice);
+		PlayerPrefs.Save ();
+		ThemeSelectionScreenController.Instance.HideThemeSelectionScreen ();
+		StartScreenController.Instance.ShowStartScreen (gameRef.startScreenRef);
+//		ShutterBoxGameController.Instance.ShowShutterBoxGameScreen (gameRef.shutterBoxGameRef);
+	}
+
+	public void BackToStartScreen ()
+	{
+		ThemeSelectionScreenController.Instance.HideThemeSelectionScreen ();
+		StartScreenController.Instance.ShowStartScreen (gameRef.startScreenRef);
 	}
 }

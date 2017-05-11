@@ -22,6 +22,11 @@ public class GameModel: Singleton <GameModel>
 		set;
 	}
 
+	public string SelectedThemeChoice {
+		get;
+		set;
+	}
+
 	public void SetUpGameVariables()
 	{
 		this.Score = 0;

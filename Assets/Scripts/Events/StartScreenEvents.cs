@@ -8,4 +8,8 @@ public class StartScreenEvents : MonoBehaviour {
 	{
 		GameController.Instance.OpenShutterBoxScreen ();
 	}
+	public void OptionsButtonTapped()
+	{
+		GameController.Instance.OpenThemeSelectionScreen ();
+	}
 }

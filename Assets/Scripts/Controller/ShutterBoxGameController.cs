@@ -5,6 +5,7 @@ using UnityEngine;
 public class ShutterBoxGameController : Singleton<ShutterBoxGameController> {
 
 	ShutterBoxGameReferences shutterBoxGameRef;
+	public SpriteRenderer backgroundImage;
 
 	public bool ShouldAllowBoxMovement {
 		get;
@@ -68,6 +69,19 @@ public class ShutterBoxGameController : Singleton<ShutterBoxGameController> {
 	{
 //		ResumeGame = true;
 		shutterBoxGameRef = shutterBoxGameReferences;
+//		if (GameModel.Instance.SelectedThemeChoice == 0) {
+//			
+//			backgroundImage.sprite = Resources.Load ("blueBackground", typeof(Sprite)) as Sprite;
+//		} else if (GameModel.Instance.SelectedThemeChoice == 1) {
+//
+//			backgroundImage.sprite = Resources.Load ("greenBackground", typeof(Sprite)) as Sprite;
+//		} else if (GameModel.Instance.SelectedThemeChoice == 2) {
+//
+//			backgroundImage.sprite = Resources.Load ("purpleBackground", typeof(Sprite)) as Sprite;
+//		} else if (GameModel.Instance.SelectedThemeChoice == 3) {
+//
+//			backgroundImage.sprite = Resources.Load ("maroonBackground", typeof(Sprite)) as Sprite;
+//		}
 		shutterBoxGameRef.gameObject.SetActive (true);
 		shutterBoxGameRef.playerScoreLabel.gameObject.SetActive (true);
 		shutterBoxGameRef.pauseButton.gameObject.SetActive (true);
