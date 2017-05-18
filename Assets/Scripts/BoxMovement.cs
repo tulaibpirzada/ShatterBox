@@ -30,10 +30,14 @@ public class BoxMovement : MonoBehaviour {
 		ShutterBoxGameController.Instance.BoxCount++;
 		isForceApplied = false;
 //		if (ShutterBoxGameController.Instance.BoxCount % 5 == 0) {
-//			boxType = BoxTypes.TimeFreeze;
-//			boxImage.sprite = Resources.Load ("freeze", typeof(Sprite)) as Sprite;
+//			boxType = BoxTypes.TimeSlow;
+//			boxImage.sprite = Resources.Load ("slow", typeof(Sprite)) as Sprite;
 //		}
-//		shouldAllowBoxDestruction = true;
+		if (ShutterBoxGameController.Instance.BoxCount % 5 == 0) {
+			boxType = BoxTypes.TimeFreeze;
+			boxImage.sprite = Resources.Load ("freeze", typeof(Sprite)) as Sprite;
+		}
+		shouldAllowBoxDestruction = true;
 		if (ShutterBoxGameController.Instance.BoxCount % 10 == 0) {
 			boxType = BoxTypes.Bomb;
 			boxImage.sprite = Resources.Load ("bomb", typeof(Sprite)) as Sprite;
@@ -157,17 +161,30 @@ public class BoxMovement : MonoBehaviour {
 //			}
 
 		}
-		if(ShutterBoxGameController.Instance.IsFreezePressed && !isFreeze){
+		if (ShutterBoxGameController.Instance.IsFreezePressed && !isFreeze) {
 			Rigidbody2D rb = gameObject.GetComponent <Rigidbody2D> ();
 			rb.bodyType = RigidbodyType2D.Dynamic;								
 			rb.velocity = Vector2.zero;
 			rb.gravityScale = 0;
 			isFreeze = true;
-//			GameModel.Instance.Score++;
-//			ShutterBoxGameController.Instance.UpdateScore ();
 			ShutterBoxGameController.Instance.StopBoxSpawningWhileFreeze ();
-			freezeRoutine = StartCoroutine (StopBoxFreeze());
+			freezeRoutine = StartCoroutine (StopBoxFreeze ());
+		} else if (!ShutterBoxGameController.Instance.IsFreezePressed && isFreeze) {
+			Rigidbody2D rb = gameObject.GetComponent <Rigidbody2D> ();
+			rb.gravityScale = 1;
 		}
+
+//		if(ShutterBoxGameController.Instance.IsFreezePressed && !isFreeze){
+//			Rigidbody2D rb = gameObject.GetComponent <Rigidbody2D> ();
+//			rb.bodyType = RigidbodyType2D.Dynamic;								
+//			rb.velocity = Vector2.zero;
+//			rb.gravityScale = 0;
+//			isFreeze = true;
+////			GameModel.Instance.Score++;
+////			ShutterBoxGameController.Instance.UpdateScore ();
+//			ShutterBoxGameController.Instance.StopBoxSpawningWhileFreeze ();
+//			freezeRoutine = StartCoroutine (StopBoxFreeze());
+//		}
 		if(ShutterBoxGameController.Instance.IsSlowPressed){
 			Rigidbody2D rb = gameObject.GetComponent < Rigidbody2D> ();
 			Debug.Log ("Velocity = " + rb.velocity);
@@ -198,7 +215,7 @@ public class BoxMovement : MonoBehaviour {
 
 	IEnumerator StopBoxFreeze()
 	{
-		yield return new WaitForSeconds (0.25f);
+		yield return new WaitForSeconds (3.0f);
 		ShutterBoxGameController.Instance.IsFreezePressed = false;
 		ShutterBoxGameController.Instance.ResumeBoxSpawning ();
 		Debug.Log ("Within Box freeze coroutine");
