@@ -8,4 +8,9 @@ public class OptionsScreenEvents : MonoBehaviour {
 	{
 		GameController.Instance.OpenThemeSelectionScreen ();
 	}
+
+	public void CloseButtonTapped()
+	{
+		GameController.Instance.BackToStartScreenFromOptionScreen ();
+	}
 }

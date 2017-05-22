@@ -19,6 +19,12 @@ public class BoxMovement : MonoBehaviour {
 		TimeFreeze = 2,
 		TimeSlow = 3
 	  }
+	private enum ThemeBoxTypes {
+		Theme1=0,
+		Theme2=1,
+		Theme3=2,
+		Theme4=3
+	}
 	private BoxTypes boxType;
 	// Use this for initialization
 	void Start () {
