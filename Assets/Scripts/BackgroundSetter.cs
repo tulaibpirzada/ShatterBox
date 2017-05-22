@@ -13,7 +13,7 @@ public class BackgroundSetter : MonoBehaviour {
 //			GameModel.Instance.SelectedThemeChoice = PlayerPrefs.GetString ("ThemeChoice");
 //		} else {
 			background = gameObject.GetComponent<SpriteRenderer> ();
-			background.sprite = Resources.Load ("blueBackground", typeof(Sprite)) as Sprite;
+			background.sprite = Resources.Load ("simpleBackground", typeof(Sprite)) as Sprite;
 //		}
 	}
 

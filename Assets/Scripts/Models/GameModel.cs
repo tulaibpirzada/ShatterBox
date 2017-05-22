@@ -35,6 +35,12 @@ public class GameModel: Singleton <GameModel>
 		}  else {
 			bestScore = 0;
 		}
+
+		if (PlayerPrefs.HasKey ("ThemeChoice")) {
+			this.SelectedThemeChoice = PlayerPrefs.GetString ("ThemeChoice");
+		}  else {
+			this.SelectedThemeChoice = "theme1";
+		}
 		this.PauseButtonCounter = 0;
 	}
 }

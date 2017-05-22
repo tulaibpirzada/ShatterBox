@@ -33,24 +33,53 @@ public class BoxMovement : MonoBehaviour {
 //			boxType = BoxTypes.TimeSlow;
 //			boxImage.sprite = Resources.Load ("slow", typeof(Sprite)) as Sprite;
 //		}
-		if (ShutterBoxGameController.Instance.BoxCount % 5 == 0) {
-			boxType = BoxTypes.TimeFreeze;
-			boxImage.sprite = Resources.Load ("freeze", typeof(Sprite)) as Sprite;
-		}
+//		if (ShutterBoxGameController.Instance.BoxCount % 5 == 0) {
+//			boxType = BoxTypes.TimeFreeze;
+//			boxImage.sprite = Resources.Load ("freeze", typeof(Sprite)) as Sprite;
+//		}
 		shouldAllowBoxDestruction = true;
-		if (ShutterBoxGameController.Instance.BoxCount % 10 == 0) {
-			boxType = BoxTypes.Bomb;
-			boxImage.sprite = Resources.Load ("bomb", typeof(Sprite)) as Sprite;
-		} else if (ShutterBoxGameController.Instance.BoxCount % 5 == 0) {
-			boxType = BoxTypes.TimeFreeze;
-			boxImage.sprite = Resources.Load ("freeze", typeof(Sprite)) as Sprite;
-		} else if (ShutterBoxGameController.Instance.BoxCount % 8 == 0) {
-			boxType = BoxTypes.TimeSlow;
-			boxImage.sprite = Resources.Load ("slow", typeof(Sprite)) as Sprite;
-		}
-		else {
-			boxType = BoxTypes.Simple;
-			boxImage.sprite = Resources.Load ("box", typeof(Sprite)) as Sprite;
+		if (GameModel.Instance.SelectedThemeChoice == "theme1") {
+			if (ShutterBoxGameController.Instance.BoxCount % 10 == 0) {
+				boxType = BoxTypes.Bomb;
+				boxImage.sprite = Resources.Load ("Theme2BoxBomb", typeof(Sprite)) as Sprite;
+			} else if (ShutterBoxGameController.Instance.BoxCount % 5 == 0) {
+				boxType = BoxTypes.TimeFreeze;
+				boxImage.sprite = Resources.Load ("Theme2BoxFreeze", typeof(Sprite)) as Sprite;
+			} else if (ShutterBoxGameController.Instance.BoxCount % 8 == 0) {
+				boxType = BoxTypes.TimeSlow;
+				boxImage.sprite = Resources.Load ("Theme2BoxSlow", typeof(Sprite)) as Sprite;
+			} else {
+				boxType = BoxTypes.Simple;
+				boxImage.sprite = Resources.Load ("Theme2BoxSimple", typeof(Sprite)) as Sprite;
+			}
+		} else if (GameModel.Instance.SelectedThemeChoice == "theme2") {
+			if (ShutterBoxGameController.Instance.BoxCount % 10 == 0) {
+				boxType = BoxTypes.Bomb;
+				boxImage.sprite = Resources.Load ("Theme2BoxBomb", typeof(Sprite)) as Sprite;
+			} else if (ShutterBoxGameController.Instance.BoxCount % 5 == 0) {
+				boxType = BoxTypes.TimeFreeze;
+				boxImage.sprite = Resources.Load ("Theme2BoxFreeze", typeof(Sprite)) as Sprite;
+			} else if (ShutterBoxGameController.Instance.BoxCount % 8 == 0) {
+				boxType = BoxTypes.TimeSlow;
+				boxImage.sprite = Resources.Load ("Theme2BoxSlow", typeof(Sprite)) as Sprite;
+			} else {
+				boxType = BoxTypes.Simple;
+				boxImage.sprite = Resources.Load ("Theme2BoxSimple", typeof(Sprite)) as Sprite;
+			}
+		} else if (GameModel.Instance.SelectedThemeChoice == "theme3") {
+			if (ShutterBoxGameController.Instance.BoxCount % 10 == 0) {
+				boxType = BoxTypes.Bomb;
+				boxImage.sprite = Resources.Load ("Theme1BoxBomb", typeof(Sprite)) as Sprite;
+			} else if (ShutterBoxGameController.Instance.BoxCount % 5 == 0) {
+				boxType = BoxTypes.TimeFreeze;
+				boxImage.sprite = Resources.Load ("Theme1BoxFreeze", typeof(Sprite)) as Sprite;
+			} else if (ShutterBoxGameController.Instance.BoxCount % 8 == 0) {
+				boxType = BoxTypes.TimeSlow;
+				boxImage.sprite = Resources.Load ("Theme1BoxSlow", typeof(Sprite)) as Sprite;
+			} else {
+				boxType = BoxTypes.Simple;
+				boxImage.sprite = Resources.Load ("Theme1BoxSimple", typeof(Sprite)) as Sprite;
+			}
 		}
 	}
 	
@@ -215,7 +244,7 @@ public class BoxMovement : MonoBehaviour {
 
 	IEnumerator StopBoxFreeze()
 	{
-		yield return new WaitForSeconds (3.0f);
+		yield return new WaitForSeconds (2.0f);
 		ShutterBoxGameController.Instance.IsFreezePressed = false;
 		ShutterBoxGameController.Instance.ResumeBoxSpawning ();
 		Debug.Log ("Within Box freeze coroutine");
