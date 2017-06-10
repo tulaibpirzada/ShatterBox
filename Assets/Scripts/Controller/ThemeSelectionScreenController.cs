@@ -38,7 +38,6 @@ public class ThemeSelectionScreenController : Singleton<ThemeSelectionScreenCont
 
 	public void LoadTheme (string selectedTheme)
 	{
-		Debug.Log ("LoadTheme");
 		GameModel.Instance.SelectedThemeChoice = selectedTheme;
 		PlayerPrefs.SetString ("ThemeChoice", GameModel.Instance.SelectedThemeChoice);;
 	}

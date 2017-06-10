@@ -61,8 +61,8 @@ public class ShutterBoxGameController : Singleton<ShutterBoxGameController> {
 		get;
 		set;
 	}
-
 	Coroutine lastRoutine=null;
+	Coroutine freezeRoutine;
 
 	//Shows first game start screen
 	public void ShowShutterBoxGameScreen(ShutterBoxGameReferences shutterBoxGameReferences)
@@ -93,7 +93,7 @@ public class ShutterBoxGameController : Singleton<ShutterBoxGameController> {
 
 	IEnumerator SpawnBoxes()
 	{
-		yield return new WaitForSeconds(1.0f);
+		yield return new WaitForSeconds(2.0f);
 		while (!IsGameOver) {
 			GameObject box = shutterBoxGameRef.box;
 			float []x_values = { -2.3f,-2.0f,-1.5f,-1.0f,-0.5f,0.0f,0.5f,1.0f,1.5f,2.0f, 2.3f };
@@ -131,14 +131,12 @@ public class ShutterBoxGameController : Singleton<ShutterBoxGameController> {
 			ResumeNewBoxMovement = true;
 			IsGamePaused = false;
 			lastRoutine=StartCoroutine(SpawnBoxes());
-			Debug.Log ("Resume Game");
 		}
 
 	}
 
 	public void StopBoxSpawningWhileFreeze ()
 	{
-		Debug.Log ("While Freeze");
 		if (lastRoutine != null) {
 			StopCoroutine (lastRoutine);
 			lastRoutine = null;
@@ -147,7 +145,18 @@ public class ShutterBoxGameController : Singleton<ShutterBoxGameController> {
 
 	public void ResumeBoxSpawning ()
 	{
-		Debug.Log ("Again Spawning");
 		lastRoutine=StartCoroutine(SpawnBoxes());
+	}
+
+	public void EndBoxFreeze ()
+	{
+		freezeRoutine = StartCoroutine (WaitAndResumeSpawning());
+	}
+
+	public IEnumerator WaitAndResumeSpawning ()
+	{
+		yield return new WaitForSeconds (2.0f);
+		this.IsFreezePressed = false;
+		ResumeBoxSpawning ();
 	}
 }
