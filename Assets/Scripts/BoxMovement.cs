@@ -19,12 +19,6 @@ public class BoxMovement : MonoBehaviour {
 		TimeFreeze = 2,
 		TimeSlow = 3
 	  }
-	private enum ThemeBoxTypes {
-		Theme1=0,
-		Theme2=1,
-		Theme3=2,
-		Theme4=3
-	}
 	private BoxTypes boxType;
 	// Use this for initialization
 	void Start () {
@@ -35,67 +29,31 @@ public class BoxMovement : MonoBehaviour {
 		slowRoutine = null;
 		ShutterBoxGameController.Instance.BoxCount++;
 		isForceApplied = false;
-//		if (ShutterBoxGameController.Instance.BoxCount % 5 == 0) {
-//			boxType = BoxTypes.TimeSlow;
-//			boxImage.sprite = Resources.Load ("slow", typeof(Sprite)) as Sprite;
-//		}
-//		if (ShutterBoxGameController.Instance.BoxCount % 5 == 0) {
-//			boxType = BoxTypes.TimeFreeze;
-//			boxImage.sprite = Resources.Load ("freeze", typeof(Sprite)) as Sprite;
-//		}
+		Debug.Log ("In start");
 		shouldAllowBoxDestruction = true;
-		if (GameModel.Instance.SelectedThemeChoice == "theme1") {
 			if (ShutterBoxGameController.Instance.BoxCount % 10 == 0) {
 				boxType = BoxTypes.Bomb;
-				boxImage.sprite = Resources.Load ("Theme2BoxBomb", typeof(Sprite)) as Sprite;
+				string bombBoxImageName = GameModel.Instance.SelectedThemeChoice + "BoxBomb";
+			    boxImage.sprite = Resources.Load (bombBoxImageName, typeof(Sprite)) as Sprite;
 			} else if (ShutterBoxGameController.Instance.BoxCount % 5 == 0) {
 				boxType = BoxTypes.TimeFreeze;
-				boxImage.sprite = Resources.Load ("Theme2BoxFreeze", typeof(Sprite)) as Sprite;
+				string freezeBoxImageName = GameModel.Instance.SelectedThemeChoice + "BoxFreeze";
+			    boxImage.sprite = Resources.Load (freezeBoxImageName, typeof(Sprite)) as Sprite;
 			} else if (ShutterBoxGameController.Instance.BoxCount % 8 == 0) {
 				boxType = BoxTypes.TimeSlow;
-				boxImage.sprite = Resources.Load ("Theme2BoxSlow", typeof(Sprite)) as Sprite;
+				string slowBoxImageName = GameModel.Instance.SelectedThemeChoice + "BoxSlow";
+			    boxImage.sprite = Resources.Load (slowBoxImageName, typeof(Sprite)) as Sprite;
 			} else {
 				boxType = BoxTypes.Simple;
-				boxImage.sprite = Resources.Load ("Theme2BoxSimple", typeof(Sprite)) as Sprite;
+				string simpleBoxImageName = GameModel.Instance.SelectedThemeChoice + "BoxSimple";
+			    boxImage.sprite = Resources.Load (simpleBoxImageName, typeof(Sprite)) as Sprite;
 			}
-		} else if (GameModel.Instance.SelectedThemeChoice == "theme2") {
-			if (ShutterBoxGameController.Instance.BoxCount % 10 == 0) {
-				boxType = BoxTypes.Bomb;
-				boxImage.sprite = Resources.Load ("Theme2BoxBomb", typeof(Sprite)) as Sprite;
-			} else if (ShutterBoxGameController.Instance.BoxCount % 5 == 0) {
-				boxType = BoxTypes.TimeFreeze;
-				boxImage.sprite = Resources.Load ("Theme2BoxFreeze", typeof(Sprite)) as Sprite;
-			} else if (ShutterBoxGameController.Instance.BoxCount % 8 == 0) {
-				boxType = BoxTypes.TimeSlow;
-				boxImage.sprite = Resources.Load ("Theme2BoxSlow", typeof(Sprite)) as Sprite;
-			} else {
-				boxType = BoxTypes.Simple;
-				boxImage.sprite = Resources.Load ("Theme2BoxSimple", typeof(Sprite)) as Sprite;
-			}
-		} else if (GameModel.Instance.SelectedThemeChoice == "theme3") {
-			if (ShutterBoxGameController.Instance.BoxCount % 10 == 0) {
-				boxType = BoxTypes.Bomb;
-				boxImage.sprite = Resources.Load ("Theme1BoxBomb", typeof(Sprite)) as Sprite;
-			} else if (ShutterBoxGameController.Instance.BoxCount % 5 == 0) {
-				boxType = BoxTypes.TimeFreeze;
-				boxImage.sprite = Resources.Load ("Theme1BoxFreeze", typeof(Sprite)) as Sprite;
-			} else if (ShutterBoxGameController.Instance.BoxCount % 8 == 0) {
-				boxType = BoxTypes.TimeSlow;
-				boxImage.sprite = Resources.Load ("Theme1BoxSlow", typeof(Sprite)) as Sprite;
-			} else {
-				boxType = BoxTypes.Simple;
-				boxImage.sprite = Resources.Load ("Theme1BoxSimple", typeof(Sprite)) as Sprite;
-			}
-		}
 	}
 	
 	// Update is called once per frame
 	void FixedUpdate () {
 
 		if (ShutterBoxGameController.Instance.ShouldAllowBoxMovement && !isForceApplied) {
-//
-//			if((Input.touchCount > 0 && Input.GetTouch (0).phase == TouchPhase.Began) || (Input.GetMouseButtonDown (0))){
-//		if(!isForceApplied){
 			ShutterBoxGameController.Instance.ShouldAllowBoxDestruction = true;
 			Rigidbody2D rb = gameObject.GetComponent < Rigidbody2D> ();
 			rb.bodyType = RigidbodyType2D.Dynamic;								
@@ -149,14 +107,7 @@ public class BoxMovement : MonoBehaviour {
 					ShutterBoxGameController.Instance.IsSlowPressed = true;
 					Destroy (gameObject);
 				}
-					}
-//					if (ShutterBoxGameController.Instance.IsBoxTouched) {
-//						Destroy (gameObject.GetComponent<Collider2D>());
-//						Debug.Log ("Box Touched");
-//					}
-
-//				}
-			//}
+			}
 		}
 
 		if (ShutterBoxGameController.Instance.IsGamePaused) {
@@ -166,8 +117,6 @@ public class BoxMovement : MonoBehaviour {
 			rb.bodyType = RigidbodyType2D.Dynamic;								
 			rb.velocity = Vector2.zero;
 			rb.gravityScale = 0;
-//			rb.isKinematic = false;
-//			Physics2D.gravity = new Vector3 (0.0f, 0.0f, 0.0f);
 		} 
 
 		if (ShutterBoxGameController.Instance.ResumeGame) {
@@ -187,14 +136,7 @@ public class BoxMovement : MonoBehaviour {
 		}
 
 		if(ShutterBoxGameController.Instance.IsBombDestroyed) {
-//			GameModel.Instance.Score++;
-//			ShutterBoxGameController.Instance.UpdateScore ();
-//			Destroy(gameObject);
 			lastRoutine = StartCoroutine(StopBoxDestruction(gameObject));
-//			if (lastRoutine != null) {
-//				StopCoroutine (StopBoxDestruction ());
-//			}
-
 		}
 		if (ShutterBoxGameController.Instance.IsFreezePressed && !isFreeze) {
 			Rigidbody2D rb = gameObject.GetComponent <Rigidbody2D> ();
@@ -207,24 +149,13 @@ public class BoxMovement : MonoBehaviour {
 		} else if (!ShutterBoxGameController.Instance.IsFreezePressed && isFreeze) {
 			Rigidbody2D rb = gameObject.GetComponent <Rigidbody2D> ();
 			rb.gravityScale = 1;
+			ShutterBoxGameController.Instance.StopBoxSpawningWhileFreeze ();
+			freezeRoutine = StartCoroutine (StopBoxFreeze ());
 		}
-
-//		if(ShutterBoxGameController.Instance.IsFreezePressed && !isFreeze){
-//			Rigidbody2D rb = gameObject.GetComponent <Rigidbody2D> ();
-//			rb.bodyType = RigidbodyType2D.Dynamic;								
-//			rb.velocity = Vector2.zero;
-//			rb.gravityScale = 0;
-//			isFreeze = true;
-////			GameModel.Instance.Score++;
-////			ShutterBoxGameController.Instance.UpdateScore ();
-//			ShutterBoxGameController.Instance.StopBoxSpawningWhileFreeze ();
-//			freezeRoutine = StartCoroutine (StopBoxFreeze());
-//		}
+			
 		if(ShutterBoxGameController.Instance.IsSlowPressed){
 			Rigidbody2D rb = gameObject.GetComponent < Rigidbody2D> ();
 			Debug.Log ("Velocity = " + rb.velocity);
-//			GameModel.Instance.Score++;
-//			ShutterBoxGameController.Instance.UpdateScore ();
 			if (rb.velocity.y < 0) {
 				rb.gravityScale = 0.2f;
 				slowRoutine = StartCoroutine (StopSlowBoxMovement ());

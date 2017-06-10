@@ -2,26 +2,26 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BackgroundSetter : MonoBehaviour { 
+public class BackgroundSetter : MonoBehaviour
+{
 
 	private SpriteRenderer background;
 	private string newBackgroundName;
-	private string nameOfTheme;
-	void Start()
+	private string backgroundName;
+
+	void Start ()
 	{
-//		if (PlayerPrefs.HasKey ("ThemeChoice")) {
-//			GameModel.Instance.SelectedThemeChoice = PlayerPrefs.GetString ("ThemeChoice");
-//		} else {
-			background = gameObject.GetComponent<SpriteRenderer> ();
-			background.sprite = Resources.Load ("simpleBackground", typeof(Sprite)) as Sprite;
-//		}
+		string nameOfTheme = GameModel.Instance.SelectedThemeChoice;
+		backgroundName = ShutterGameConstants.BACKGROUND_IMAGES [nameOfTheme];
+		background = gameObject.GetComponent<SpriteRenderer> ();
+		background.sprite = Resources.Load (backgroundName, typeof(Sprite)) as Sprite;
 	}
 
-	void Update()
+	void Update ()
 	{
 		if (GameController.Instance.IsThemeChanged) {
 			GameController.Instance.IsThemeChanged = false;
-			nameOfTheme = PlayerPrefs.GetString ("ThemeChoice");
+			string nameOfTheme = GameModel.Instance.SelectedThemeChoice;
 			newBackgroundName = ShutterGameConstants.BACKGROUND_IMAGES [nameOfTheme];
 			background.sprite = Resources.Load (newBackgroundName, typeof(Sprite)) as Sprite;
 		}

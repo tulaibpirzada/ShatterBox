@@ -5,5 +5,7 @@ using UnityEngine.UI;
 
 public class ThemeSelectionScreenReferences : MonoBehaviour {
 
-	public List<Button> themeButton = new List<Button> ();
+	public GameObject themePackListItem;
+	public RectTransform scrollContentView;
+	public ScrollRect scrollView;
 }

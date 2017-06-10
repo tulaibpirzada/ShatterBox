@@ -8,4 +8,9 @@ public class GameOverScreenEvents : MonoBehaviour {
 	{
 		GameController.Instance.ReloadShutterBoxGameScreen ();
 	}
+
+	public void MainMenuButtonTapped()
+	{
+		GameController.Instance.BackFromGameOverScreenToStartScreen ();
+	}
 }

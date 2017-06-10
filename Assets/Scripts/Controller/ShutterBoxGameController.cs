@@ -67,21 +67,7 @@ public class ShutterBoxGameController : Singleton<ShutterBoxGameController> {
 	//Shows first game start screen
 	public void ShowShutterBoxGameScreen(ShutterBoxGameReferences shutterBoxGameReferences)
 	{
-//		ResumeGame = true;
 		shutterBoxGameRef = shutterBoxGameReferences;
-//		if (GameModel.Instance.SelectedThemeChoice == 0) {
-//			
-//			backgroundImage.sprite = Resources.Load ("blueBackground", typeof(Sprite)) as Sprite;
-//		} else if (GameModel.Instance.SelectedThemeChoice == 1) {
-//
-//			backgroundImage.sprite = Resources.Load ("greenBackground", typeof(Sprite)) as Sprite;
-//		} else if (GameModel.Instance.SelectedThemeChoice == 2) {
-//
-//			backgroundImage.sprite = Resources.Load ("purpleBackground", typeof(Sprite)) as Sprite;
-//		} else if (GameModel.Instance.SelectedThemeChoice == 3) {
-//
-//			backgroundImage.sprite = Resources.Load ("maroonBackground", typeof(Sprite)) as Sprite;
-//		}
 		shutterBoxGameRef.gameObject.SetActive (true);
 		shutterBoxGameRef.playerScoreLabel.gameObject.SetActive (true);
 		shutterBoxGameRef.pauseButton.gameObject.SetActive (true);
@@ -94,13 +80,13 @@ public class ShutterBoxGameController : Singleton<ShutterBoxGameController> {
 		IsBoxTouched = false;
 		lastRoutine=StartCoroutine(SpawnBoxes());
 	}
-
-	//Hide first game start screen
+		
 	public void HideShutterBoxScreen()
 	{
 		IsGameOver = true;
 		shutterBoxGameRef.gameObject.SetActive (false);
 		shutterBoxGameRef.pauseButton.gameObject.SetActive (false);
+		shutterBoxGameRef.playerScoreLabel.gameObject.SetActive (false);
 		if(lastRoutine != null)
 			StopCoroutine (lastRoutine);
 	}
